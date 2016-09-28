@@ -23,7 +23,7 @@ apply plugin : 'net.sf.gapt'
 //End Plugins
 
 //Program Specific Variables (Fill these in)
-def programVersion = "2"
+def programVersion = "3"
 def programGroup = "com.gmail.socraticphoenix.sponge"
 def programName = "BrainFkMC"
 def repoName = "Main"

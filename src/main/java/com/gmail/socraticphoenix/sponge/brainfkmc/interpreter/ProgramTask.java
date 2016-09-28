@@ -95,7 +95,8 @@ public class ProgramTask implements Runnable {
                         }
                     }
                     this.executed++;
-                    if(this.executed > BrainFkMC.getOperatingInstance().getMaxInstructions()) {
+                    int max = BrainFkMC.getOperatingInstance().getMaxInstructions();
+                    if(max >= 0 && this.executed > max) {
                         this.terminated = true;
                         this.terminatedInf = true;
                     }
@@ -109,11 +110,13 @@ public class ProgramTask implements Runnable {
 
         if (this.terminated) {
             this.program.terminateTask();
-            this.program.getPlayer().sendMessage(Text.of(TextColors.RED, "Program executed more than " + BrainFkMC.getOperatingInstance().getMaxInstructions() + ", so it was terminated"));
-            Sponge.getScheduler().createTaskBuilder()
-                    .execute(() -> this.program.getTape().reset())
-                    .delayTicks(20 * 3)
-                    .submit(BrainFkMC.getOperatingInstance());
+            if(this.terminatedInf) {
+                this.program.getPlayer().sendMessage(Text.of(TextColors.RED, "Program executed more than " + BrainFkMC.getOperatingInstance().getMaxInstructions() + ", so it was terminated"));
+                Sponge.getScheduler().createTaskBuilder()
+                        .execute(() -> this.program.getTape().reset())
+                        .delayTicks(20 * 3)
+                        .submit(BrainFkMC.getOperatingInstance());
+            }
         }
     }
 

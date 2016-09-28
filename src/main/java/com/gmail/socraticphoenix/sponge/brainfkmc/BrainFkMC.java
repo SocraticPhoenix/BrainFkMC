@@ -70,8 +70,8 @@ public class BrainFkMC {
             this.config.getAbsoluteFile().getParentFile().mkdirs();
             this.config.createNewFile();
             CommentedConfigurationNode node = HoconConfigurationLoader.builder().build().createEmptyNode();
-            node.getNode("instructions_per_tick").setValue(5);
-            node.getNode("max_instructions").setValue(10_000);
+            node.getNode("instructions_per_tick").setComment("The number of instructions in a program to execute each tick. Higher values will mean more lag, lower values will me slower programs").setValue(5);
+            node.getNode("max_instructions").setComment("The maximum number of instructions a program can execute, or negative if there is no limit. If this is set to a positive number, it will prevent infinite loops from running forever").setValue(-1);
             HoconConfigurationLoader loader = HoconConfigurationLoader.builder().setPath(this.config.toPath()).build();
             loader.save(node);
             this.node = node;
